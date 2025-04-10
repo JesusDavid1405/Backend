@@ -63,12 +63,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var OrigenesPermitidos = builder.Configuration.GetValue<string>("OrigenesPermitidos")!.Split(",");
 
-builder.Services.AddCors(opciones =>
+builder.Services.AddCors(options =>
 {
-    opciones.AddDefaultPolicy(politica =>
-    {
-        politica.WithOrigins(OrigenesPermitidos).AllowAnyHeader().AllowAnyMethod();
-    });
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://127.0.0.1:5500")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
 });
 //builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 //opciones.UseSqlServer("name=DefaultConnection"));
@@ -84,7 +84,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 app.MapControllers();
