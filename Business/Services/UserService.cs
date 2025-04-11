@@ -1,6 +1,7 @@
 ﻿using Business.Core;
 using Data.Interfaces;
 using Entity.DTO;
+using Entity.DTO.Update;
 using Entity.Model;
 using Microsoft.Extensions.Logging;
 
