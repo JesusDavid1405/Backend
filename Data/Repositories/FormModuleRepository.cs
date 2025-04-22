@@ -23,7 +23,7 @@ namespace Data.Repositories
             return await _context.FormModule
            .Include(fm => fm.Form)
            .Include(fm => fm.Module)
-           .Where(fm => fm.IsDeleted)
+           .Where(fm => !fm.IsDeleted)
            .ToListAsync();
         }
 

@@ -22,16 +22,16 @@ namespace Data.Repositories
             return await _context.RolUser
            .Include(fm => fm.Rol)
            .Include(fm => fm.User)
-           .Where(fm => fm.IsDeleted)
+           .Where(fm => !fm.IsDeleted)
            .ToListAsync();
         }
 
         public async Task<RolUser?> GetByIdAsync(int id)
         {
             return await _context.Set<RolUser>()
-        .Include(fm => fm.Rol)
-        .Include(fm => fm.User)
-        .FirstOrDefaultAsync(fm => fm.Id == id);
+            .Include(fm => fm.Rol)
+            .Include(fm => fm.User)
+            .FirstOrDefaultAsync(fm => fm.Id == id);
 
 
         }

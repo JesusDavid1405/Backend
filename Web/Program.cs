@@ -54,7 +54,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     switch (dbProvider)
     {
         case "SqlServer":
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConn"));
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             break;
         default:
             throw new Exception("Proveedor de base de datos no soportado");
