@@ -35,7 +35,7 @@ builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<RolService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserServices,UserService>();
 
 
 builder.Services.AddScoped<IFormModuleRepository, FormModuleRepository>();
@@ -61,15 +61,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     }
 });
 
-var OrigenesPermitidos = builder.Configuration.GetValue<string>("OrigenesPermitidos")!.Split(",");
+var origenesPermitidos = builder.Configuration
+    .GetValue<string>("OrigenesPermitidos")!
+    .Split(",");
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
-        policy => policy.WithOrigins("http://127.0.0.1:5500")
+        policy => policy.WithOrigins(origenesPermitidos)
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
+
 //builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 //opciones.UseSqlServer("name=DefaultConnection"));
 
@@ -84,6 +87,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
+
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
 

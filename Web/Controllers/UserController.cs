@@ -1,4 +1,4 @@
-﻿using Business.Services;
+﻿using Business.Interfaces;
 using Entity.DTO;
 using Entity.DTO.Update;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +11,10 @@ namespace Web.Controllers
     [Produces("application/json")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userBusiness;
+        private readonly IUserServices _userBusiness;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(UserService _userBusiness, ILogger<UserController> _logger)
+        public UserController(IUserServices _userBusiness, ILogger<UserController> _logger)
         {
             this._userBusiness = _userBusiness;
             this._logger = _logger;
@@ -203,6 +203,36 @@ namespace Web.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
+        //[HttpPost("Login/")]
+        //[ProducesResponseType(typeof(UserDTO), 200)]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(404)]
+        //[ProducesResponseType(500)]
+        //public async Task<IActionResult> LoginUser(UserDTO userDTO)
+        //{
+        //    try
+        //    {
+        //        var loginResult = await _userBusiness.LoginAsync(userDTO);
+
+        //        if (!loginResult)
+        //        {
+        //            return NotFound(new { message = "Correo o contraseña incorrectos." });
+        //        }
+
+        //        return Ok(new { message = "Usuario logueado correctamente." });
+        //    }
+        //    catch (EntityNotFoundException ex)
+        //    {
+        //        return NotFound(new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Loguear si tienes ILogger configurado
+        //        return StatusCode(500, new { message = "Error interno del servidor", details = ex.Message });
+        //    }
+        //}
+
 
     }
 }

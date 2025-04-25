@@ -7,6 +7,7 @@ using Data.Core;
 using Data.Interfaces;
 using Entity.context;
 using Entity.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Data.Repositories
@@ -36,5 +37,20 @@ namespace Data.Repositories
         // {
         //     return await _context.People.FirstOrDefaultAsync(p => p.Document == dni);
         // }
+
+        //public async Task<bool> Login(string email, string password)
+        //{
+        //    try
+        //    {
+        //        var user = await _context.Set<User>()
+        //        .FirstOrDefaultAsync(u => u.Email == email && u.Password == password && u.Active);
+
+        //        return user != null;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }

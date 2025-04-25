@@ -10,5 +10,6 @@ namespace Data.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
+        //Task<bool> Login(string email, string password);
     }
 }
