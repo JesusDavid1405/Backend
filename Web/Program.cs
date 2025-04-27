@@ -54,7 +54,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     switch (dbProvider)
     {
         case "SqlServer":
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConn"));
             break;
         default:
             throw new Exception("Proveedor de base de datos no soportado");
@@ -87,8 +87,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCors();
 
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
