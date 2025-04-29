@@ -37,20 +37,5 @@ namespace Data.Repositories
         // {
         //     return await _context.People.FirstOrDefaultAsync(p => p.Document == dni);
         // }
-
-        //public async Task<bool> Login(string email, string password)
-        //{
-        //    try
-        //    {
-        //        var user = await _context.Set<User>()
-        //        .FirstOrDefaultAsync(u => u.Email == email && u.Password == password && u.Active);
-
-        //        return user != null;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
     }
 }
