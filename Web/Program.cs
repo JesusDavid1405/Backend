@@ -4,9 +4,15 @@ using Business.Services;
 using Data.Interfaces;
 using Data.Repositories;
 using Entity.context;
+using Entity.Model;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Mapping;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Utilities;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -18,6 +24,26 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(config => {
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(config => {
+    config.RequireHttpsMetadata = false;
+    config.SaveToken = true;
+    config.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey= true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey
+        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]!))
+    };
+});
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<PersonService>();
@@ -46,6 +72,13 @@ builder.Services.AddScoped<RolUserService>();
 
 builder.Services.AddScoped<IRolFormPermissionRepository, RolFormPermissionRepository>();
 builder.Services.AddScoped<RolFormPermissionService>();
+
+builder.Services.AddScoped<AuthRepository>();
+builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddScoped<Jwt>();
+
+
 builder.Services.AddMapster(); // agrega IMapper
 MapsterConfig.RegisterMappings(); // registra los mapeos
 
@@ -89,6 +122,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

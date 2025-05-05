@@ -1,7 +1,12 @@
-﻿using Business.Services;
+﻿using Business;
+using Business.Services;
 using Entity.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Utilities;
+using Entity.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Web.Controllers
 {
@@ -11,6 +16,7 @@ namespace Web.Controllers
     /// </summary>
 
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
 

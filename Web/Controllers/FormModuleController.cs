@@ -1,11 +1,17 @@
-﻿using Entity.DTO;
+﻿using Business;
+using Business.Services;
+using Entity.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Utilities;
-using Business.Services;
+using Entity.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Web.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     [Produces("application/json")]
     public class FormModuleController : ControllerBase
